@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text.RegularExpressions;
 
 namespace TwitchIRC
 {
@@ -9,6 +10,8 @@ namespace TwitchIRC
         private List<string> chat;
         private TextMeshPro tmp;
         private string opacity;
+        private Vector3 originalPosition;
+        private Regex stopUsingTagsYouAsshats = new Regex("(?=<)(.*?)(?<=>)", RegexOptions.Compiled);
         public void Start()
         {
             chat = new List<string>();
@@ -19,12 +22,14 @@ namespace TwitchIRC
             rectTransform.sizeDelta = new Vector2(1, 2);
             tmp.fontSize = .35f;
             tmp.alignment = TextAlignmentOptions.BottomLeft;
-            
+            originalPosition = transform.localPosition;
         }
         public void OnMessageReceived(ChatMessage chatMessage)
         {
             if (Plugin.config.ignoreMessagesWithPrefix != string.Empty && chatMessage.message.StartsWith(Plugin.config.ignoreMessagesWithPrefix))
                 return;
+            if (Plugin.config.disableChatTags)
+                chatMessage.message = stopUsingTagsYouAsshats.Replace(chatMessage.message, string.Empty);
             string message = chatMessage.message.ToLower().Contains(Plugin.config.username.ToLower()) ? $"<color={Plugin.config.taggedMessagesColor + opacity}>{chatMessage.message}</color>" : chatMessage.message;
             string color = (Plugin.config.overrideNameColor ? Plugin.config.customNameColor : chatMessage.color) + opacity;
             chat.Add($"<color={color}>{chatMessage.username}</color>: {message}");
@@ -42,6 +47,11 @@ namespace TwitchIRC
             chatString += "</color>";
             tmp.text = chatString;
             tmp.ForceMeshUpdate();
+        }
+        public void Update() {
+            if (!Plugin.config.chatTwitch)
+                return;
+            transform.localPosition = originalPosition + new Vector3(Random.Range(-Plugin.config.chatTwitchOffset, Plugin.config.chatTwitchOffset), Random.Range(-Plugin.config.chatTwitchOffset, Plugin.config.chatTwitchOffset), Random.Range(-Plugin.config.chatTwitchOffset, Plugin.config.chatTwitchOffset));
         }
     }
 }

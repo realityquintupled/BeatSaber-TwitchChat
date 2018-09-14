@@ -14,7 +14,7 @@ namespace TwitchIRC
         {
             material.color = new Color(1, 1, 1, 0);
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.name = "Response Handle";
+            cube.name = "Twitch Response Handle";
             cube.transform.parent = transform;
             cube.transform.localRotation = Quaternion.identity;
             cube.transform.localPosition = new Vector3(0, 0, 0);
@@ -33,7 +33,7 @@ namespace TwitchIRC
         }
         private GameObject CreateResponsePanel(GameObject parent)
         {
-            GameObject responsePanel = new GameObject("Response Panel");
+            GameObject responsePanel = new GameObject("Twitch Response Panel");
             responsePanel.transform.parent = parent.transform;
             responsePanel.transform.localPosition = new Vector3(0, 0, 0);
             TextMeshPro tmp = responsePanel.AddComponent<TextMeshPro>();
@@ -52,6 +52,7 @@ namespace TwitchIRC
                 if (halfHeight == -1)
                     halfHeight = tmp.preferredHeight / 2;
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                cube.name = "Twitch Button";
                 cube.transform.parent = responsePanel.transform;
                 cube.transform.localPosition = new Vector3(-.0375f, tmp.preferredHeight - halfHeight, 0);
                 cube.transform.localRotation = Quaternion.identity;

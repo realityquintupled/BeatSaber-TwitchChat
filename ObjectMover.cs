@@ -8,7 +8,7 @@ namespace TwitchIRC
     {
         private VRPointer vrPointer;
         private VRController vrController;
-        private Transform grabbedObject;
+        public Transform grabbedObject;
         private VRController grabbingController;
         private Vector3 grabPosition;
         private Vector3 realPosition;

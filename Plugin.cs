@@ -29,12 +29,12 @@ namespace TwitchIRC
             UnityEngine.Object.DontDestroyOnLoad(twitchContainer);
             GameObject chatContainer = new GameObject(Strings.chatPanelName);
             GameObject chatHandle = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            chatHandle.name = "Chat Handle";
+            chatHandle.name = "Twitch Chat Handle";
             chatHandle.transform.parent = chatContainer.transform;
             chatHandle.transform.localScale = new Vector3(.05f, .05f, .05f);
             chatHandle.GetComponent<MeshRenderer>().material.shader = Shader.Find(Strings.cubeShader);
             chatHandle.GetComponent<MeshRenderer>().material.color = new Color(1, 1, 1, 0);
-            GameObject chat = new GameObject("Chat");
+            GameObject chat = new GameObject("Twitch Chat");
             chat.transform.parent = chatContainer.transform;
             chat.transform.localScale = new Vector3(config.chatSize, config.chatSize, config.chatSize);
             chat.transform.position = new Vector3(chatHandle.transform.localScale.x/2, chatHandle.transform.localScale.y/2, 0);
